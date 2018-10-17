@@ -28,7 +28,7 @@ public class PermissionManager extends DialogFragment {
       /**
        * listener for result
        */
-      private OnRequestPermissionResult mOnRequestPermissionResult;
+      private OnRequestPermissionResultListener mOnRequestPermissionResult;
 
       /**
        * request a permission
@@ -40,7 +40,7 @@ public class PermissionManager extends DialogFragment {
       public static void request (
           AppCompatActivity activity,
           String permission,
-          OnRequestPermissionResult onRequestPermissionResult) {
+          OnRequestPermissionResultListener onRequestPermissionResult ) {
 
             Bundle args = new Bundle();
             args.putString(KEY_PERMISSION, permission);
@@ -77,7 +77,7 @@ public class PermissionManager extends DialogFragment {
 
                               if(shouldShowRequestPermissionRationale(permission)) {
 
-                                    mOnRequestPermissionResult.onExplain(permission);
+                                    mOnRequestPermissionResult.onFailed( permission );
                               } else {
 
                                     mOnRequestPermissionResult.onFinalDenied(permission);

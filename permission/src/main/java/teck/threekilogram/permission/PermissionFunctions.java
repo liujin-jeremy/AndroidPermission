@@ -35,7 +35,7 @@ class PermissionFunctions {
       /**
        * save listener temporary
        */
-      static final ArrayMap<Integer, OnRequestPermissionResult> TEMP_LISTENER = new ArrayMap<>();
+      static final ArrayMap<Integer, OnRequestPermissionResultListener> TEMP_LISTENER = new ArrayMap<>();
 
       /**
        * check permission
