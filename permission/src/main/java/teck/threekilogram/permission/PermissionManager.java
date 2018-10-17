@@ -11,8 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
 
 /**
@@ -71,16 +69,6 @@ public class PermissionManager extends DialogFragment {
       public void onViewCreated ( @NonNull View view, @Nullable Bundle savedInstanceState ) {
 
             super.onViewCreated( view, savedInstanceState );
-
-            /* make window not dark */
-
-            Window window = getDialog().getWindow();
-            if( window != null ) {
-
-                  LayoutParams params = window.getAttributes();
-                  params.dimAmount = 0f;
-                  window.setAttributes( params );
-            }
 
             /* check permission */
 
