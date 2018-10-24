@@ -76,7 +76,7 @@ public class PermissionManager extends DialogFragment {
 
                   if( mOnRequestPermissionResult != null ) {
 
-                        mOnRequestPermissionResult.onSuccess( mPermission );
+                        mOnRequestPermissionResult.onResult( mPermission, true, false );
                   }
 
                   dismiss();
@@ -104,15 +104,15 @@ public class PermissionManager extends DialogFragment {
 
                         if( result ) {
 
-                              mOnRequestPermissionResult.onSuccess( permission );
+                              mOnRequestPermissionResult.onResult( permission, true, false );
                         } else {
 
                               if( shouldShowRequestPermissionRationale( permission ) ) {
 
-                                    mOnRequestPermissionResult.onFailed( permission );
+                                    mOnRequestPermissionResult.onResult( permission, false, false );
                               } else {
 
-                                    mOnRequestPermissionResult.onFinalDenied( permission );
+                                    mOnRequestPermissionResult.onResult( permission, false, true );
                               }
                         }
                   }

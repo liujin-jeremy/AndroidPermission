@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-      <style name="TranslucentActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
-            <!-- window 背景透明 -->
-            <item name="android:windowBackground">@android:color/transparent</item>
-            <!-- window 半透明 -->
-            <item name="android:windowIsTranslucent">true</item>
-            <!-- 透明动画 -->
-            <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
-
+      <style name="TransparentActivityTheme" parent="Theme.AppCompat.Dialog">
+            <item name="windowActionBar">false</item>
+            <item name="windowNoTitle">true</item>
       </style>
 
 </resources>

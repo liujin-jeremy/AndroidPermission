@@ -10,10 +10,5 @@
             <item name="android:textAllCaps">false</item>
       </style>
 
-      <style name="Permission" parent="TranslucentActivityTheme">
-
-            <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-      </style>
-
 
 </resources>

@@ -8,13 +8,14 @@ import android.view.View;
 import android.widget.Toast;
 import tech.threekilogram.permission.OnRequestPermissionResultListener;
 import tech.threekilogram.permission.PermissionManager;
+import tech.threekilogram.permission.TransparentActivity;
 
 /**
  * @author liujin
  */
 public class MainActivity extends AppCompatActivity {
 
-      private static final String           TAG = "MainActivity";
+      private static final String TAG = "MainActivity";
       private              PermissionResult mPermissionResult;
 
       @Override
@@ -26,30 +27,9 @@ public class MainActivity extends AppCompatActivity {
             mPermissionResult = new PermissionResult();
       }
 
-      private class PermissionResult implements OnRequestPermissionResultListener {
+      public void toActivity ( View view ) {
 
-            @Override
-            public void onSuccess ( String permission ) {
-
-                  Log.e( TAG, "onSuccess: " + permission );
-                  Toast.makeText( MainActivity.this, permission + "成功", Toast.LENGTH_SHORT ).show();
-            }
-
-            @Override
-            public void onFailed ( String permission ) {
-
-                  Log.e( TAG, "onFailed: " + permission );
-                  Toast.makeText( MainActivity.this, permission + "失败了,解释一下", Toast.LENGTH_SHORT )
-                       .show();
-            }
-
-            @Override
-            public void onFinalDenied ( String permission ) {
-
-                  Log.e( TAG, "onFinalDenied: " + permission );
-                  Toast.makeText( MainActivity.this, permission + "最终结果失败", Toast.LENGTH_SHORT )
-                       .show();
-            }
+            TransparentActivity.start( this );
       }
 
       public void toTranslucentActivity ( View view ) {
@@ -77,5 +57,33 @@ public class MainActivity extends AppCompatActivity {
                 permission.SEND_SMS,
                 mPermissionResult
             );
+      }
+
+      private class PermissionResult implements OnRequestPermissionResultListener {
+
+            @Override
+            public void onResult ( String permission, boolean success, boolean isFinalResult ) {
+
+                  if( success ) {
+                        Log.e( TAG, "onResult: " + permission );
+                        Toast.makeText( MainActivity.this, permission + "成功", Toast.LENGTH_SHORT )
+                             .show();
+                  } else {
+
+                        if( isFinalResult ) {
+                              Log.e( TAG, "onFinalDenied: " + permission );
+                              Toast.makeText( MainActivity.this, permission + "最终结果失败",
+                                              Toast.LENGTH_SHORT
+                              )
+                                   .show();
+                        } else {
+                              Log.e( TAG, "onFailed: " + permission );
+                              Toast.makeText( MainActivity.this, permission + "失败了,解释一下",
+                                              Toast.LENGTH_SHORT
+                              )
+                                   .show();
+                        }
+                  }
+            }
       }
 }
