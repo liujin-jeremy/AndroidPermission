@@ -26,7 +26,7 @@
             </activity>
 
             <activity
-                android:name="tech.threekilogram.permission.TransparentActivity"
+                android:name="tech.threekilogram.permission.PermissionActivity"
                 android:theme="@style/TransparentActivityTheme"/>
 
       </application>

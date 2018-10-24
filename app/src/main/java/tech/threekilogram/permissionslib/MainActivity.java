@@ -7,8 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import tech.threekilogram.permission.OnRequestPermissionResultListener;
-import tech.threekilogram.permission.PermissionManager;
-import tech.threekilogram.permission.TransparentActivity;
+import tech.threekilogram.permission.PermissionActivity;
+import tech.threekilogram.permission.PermissionFragment;
 
 /**
  * @author liujin
@@ -29,12 +29,12 @@ public class MainActivity extends AppCompatActivity {
 
       public void toActivity ( View view ) {
 
-            TransparentActivity.start( this );
+            PermissionActivity.start( this );
       }
 
       public void toTranslucentActivity ( View view ) {
 
-            PermissionManager.request(
+            PermissionFragment.request(
                 this,
                 permission.WRITE_EXTERNAL_STORAGE,
                 mPermissionResult
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
       public void toManager ( View view ) {
 
-            PermissionManager.request(
+            PermissionFragment.request(
                 this,
                 permission.READ_CONTACTS,
                 mPermissionResult
@@ -52,10 +52,31 @@ public class MainActivity extends AppCompatActivity {
 
       public void toMsm ( View view ) {
 
-            PermissionManager.request(
+            PermissionFragment.request(
                 this,
                 permission.SEND_SMS,
                 mPermissionResult
+            );
+      }
+
+      public void toCalender ( View view ) {
+
+            PermissionActivity.requestPermission(
+                this, permission.SEND_SMS,
+                new OnRequestPermissionResultListener() {
+
+                      @Override
+                      public void onResult (
+                          String permission, boolean success,
+                          boolean isFinalResult ) {
+
+                            Log.e(
+                                TAG,
+                                "onResult : " + permission
+                                    + " " + success
+                            );
+                      }
+                }
             );
       }
 

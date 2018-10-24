@@ -38,4 +38,11 @@
           android:text="测试透明Activity"
           />
 
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:onClick="toCalender"
+          android:text="读取日历"
+          />
+
 </LinearLayout>

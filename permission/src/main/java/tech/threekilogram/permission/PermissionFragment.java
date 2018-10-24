@@ -1,12 +1,10 @@
 package tech.threekilogram.permission;
 
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,7 @@ import android.widget.FrameLayout;
  *
  * @author liujin
  */
-public class PermissionManager extends DialogFragment {
+public class PermissionFragment extends DialogFragment {
 
       /**
        * request permission code
@@ -43,7 +41,7 @@ public class PermissionManager extends DialogFragment {
           String permission,
           OnRequestPermissionResultListener onRequestPermissionResult ) {
 
-            PermissionManager fragment = new PermissionManager();
+            PermissionFragment fragment = new PermissionFragment();
             fragment.mPermission = permission;
             fragment.mOnRequestPermissionResult = onRequestPermissionResult;
 
@@ -72,7 +70,7 @@ public class PermissionManager extends DialogFragment {
 
             /* check permission */
 
-            if( checkPermission( getContext(), mPermission ) ) {
+            if( PermissionFun.checkPermission( getContext(), mPermission ) ) {
 
                   if( mOnRequestPermissionResult != null ) {
 
@@ -121,14 +119,5 @@ public class PermissionManager extends DialogFragment {
             }
       }
 
-      /**
-       * check permission
-       *
-       * @return true have permission
-       */
-      public static boolean checkPermission ( Context context, String permissions ) {
 
-            return ContextCompat.checkSelfPermission( context, permissions )
-                == PackageManager.PERMISSION_GRANTED;
-      }
 }

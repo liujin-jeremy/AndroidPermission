@@ -3,7 +3,7 @@
     package="tech.threekilogram.permission">
 
       <application>
-            <activity android:name="tech.threekilogram.permission.TransparentActivity">
+            <activity android:name="tech.threekilogram.permission.PermissionActivity">
             </activity>
       </application>
 
