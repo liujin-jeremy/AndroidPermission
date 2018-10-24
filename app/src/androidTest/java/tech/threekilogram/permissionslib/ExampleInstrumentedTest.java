@@ -1,6 +1,6 @@
-package teck.threekilogram.permission;
+package tech.threekilogram.permissionslib;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
             // Context of the app under test.
             Context appContext = InstrumentationRegistry.getTargetContext();
 
-            assertEquals("teck.threekilogram.permission.test", appContext.getPackageName());
+            assertEquals("teck.threekilogram.permissionslib", appContext.getPackageName());
       }
 }

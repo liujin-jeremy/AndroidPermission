@@ -1,4 +1,4 @@
-package teck.threekilogram.permissionslib;
+package tech.threekilogram.permissionslib;
 
 import android.Manifest.permission;
 import android.os.Bundle;
@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-import teck.threekilogram.permission.OnRequestPermissionResultListener;
-import teck.threekilogram.permission.PermissionManager;
+import tech.threekilogram.permission.OnRequestPermissionResultListener;
+import tech.threekilogram.permission.PermissionManager;
 
 /**
  * @author liujin

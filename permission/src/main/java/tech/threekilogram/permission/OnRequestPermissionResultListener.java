@@ -1,4 +1,4 @@
-package teck.threekilogram.permission;
+package tech.threekilogram.permission;
 
 /**
  * listener for request permission

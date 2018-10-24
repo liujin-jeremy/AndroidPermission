@@ -1,4 +1,4 @@
-package teck.threekilogram.permission;
+package tech.threekilogram.permission;
 
 import android.content.Context;
 import android.content.pm.PackageManager;

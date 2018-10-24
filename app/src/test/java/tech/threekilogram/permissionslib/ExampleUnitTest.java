@@ -1,4 +1,4 @@
-package teck.threekilogram.permissionslib;
+package tech.threekilogram.permissionslib;
 
 import static org.junit.Assert.assertEquals;
 
