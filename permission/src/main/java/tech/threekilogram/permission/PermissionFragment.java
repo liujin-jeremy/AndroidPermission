@@ -98,9 +98,7 @@ public class PermissionFragment extends DialogFragment {
 
                   if( mOnRequestPermissionResult != null ) {
 
-                        boolean result = grantResult == PackageManager.PERMISSION_GRANTED;
-
-                        if( result ) {
+                        if( grantResult == PackageManager.PERMISSION_GRANTED ) {
 
                               mOnRequestPermissionResult.onResult( permission, true, false );
                         } else {
@@ -118,6 +116,4 @@ public class PermissionFragment extends DialogFragment {
                   dismiss();
             }
       }
-
-
 }

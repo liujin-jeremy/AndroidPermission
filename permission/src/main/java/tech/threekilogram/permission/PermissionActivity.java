@@ -2,17 +2,16 @@ package tech.threekilogram.permission;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * @author liujin
@@ -21,7 +20,8 @@ public class PermissionActivity extends AppCompatActivity {
 
       private static final String TAG = PermissionActivity.class.getSimpleName();
 
-      private static final ArrayList<Holder> HOLDERS = new ArrayList<>();
+      private static ArrayMap<String, OnRequestPermissionResultListener> sRequest = new ArrayMap<>();
+      private static ArrayMap<String, OnRequestPermissionResultListener> sResult  = new ArrayMap<>();
 
       public static void start ( Context context ) {
 
@@ -34,7 +34,7 @@ public class PermissionActivity extends AppCompatActivity {
           String permission,
           OnRequestPermissionResultListener onRequestPermissionResult ) {
 
-            HOLDERS.add( new Holder( permission, onRequestPermissionResult ) );
+            sRequest.put( permission, onRequestPermissionResult );
 
             Intent starter = new Intent( context, PermissionActivity.class );
             starter.addFlags( Intent.FLAG_ACTIVITY_SINGLE_TOP );
@@ -71,13 +71,17 @@ public class PermissionActivity extends AppCompatActivity {
 
       private void handlePermissions ( ) {
 
-            while( HOLDERS.size() > 0 ) {
-                  Holder holder = HOLDERS.remove( 0 );
-                  if( PermissionFun.checkPermission( this, holder.permission ) ) {
+            while( sRequest.size() > 0 ) {
+                  String permission = sRequest.keyAt( 0 );
+                  OnRequestPermissionResultListener listener = sRequest.remove( permission );
 
+                  if( PermissionFun.checkPermission( this, permission ) ) {
+
+                        listener.onResult( permission, true, false );
                   } else {
+                        sResult.put( permission, listener );
                         ActivityCompat
-                            .requestPermissions( this, new String[]{ holder.permission }, 12 );
+                            .requestPermissions( this, new String[]{ permission }, 12 );
                   }
             }
       }
@@ -87,10 +91,27 @@ public class PermissionActivity extends AppCompatActivity {
           int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults ) {
 
             super.onRequestPermissionsResult( requestCode, permissions, grantResults );
-            Log.e( TAG, "onRequestPermissionsResult : " + Arrays.toString( permissions ) );
 
-            finish();
-            overridePendingTransition( 0, 0 );
+            String permission = permissions[ 0 ];
+            OnRequestPermissionResultListener listener = sResult.remove( permission );
+
+            boolean success = grantResults[ 0 ] == PackageManager.PERMISSION_GRANTED;
+            if( success ) {
+
+                  listener.onResult( permission, success, false );
+            } else {
+
+                  if( ActivityCompat.shouldShowRequestPermissionRationale( this, permission ) ) {
+                        listener.onResult( permission, false, false );
+                  } else {
+                        listener.onResult( permission, false, true );
+                  }
+            }
+
+            if( sResult.size() == 0 ) {
+                  finish();
+                  overridePendingTransition( 0, 0 );
+            }
       }
 
       public static class Holder {
