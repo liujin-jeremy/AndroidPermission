@@ -25,10 +25,6 @@
                   </intent-filter>
             </activity>
 
-            <activity
-                android:name="tech.threekilogram.permission.PermissionActivity"
-                android:theme="@style/TransparentActivityTheme"/>
-
       </application>
 
 </manifest>

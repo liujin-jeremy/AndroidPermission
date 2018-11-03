@@ -95,14 +95,12 @@ public class MainActivity extends AppCompatActivity {
                               Log.e( TAG, "onFinalDenied: " + permission );
                               Toast.makeText( MainActivity.this, permission + "最终结果失败",
                                               Toast.LENGTH_SHORT
-                              )
-                                   .show();
+                              ).show();
                         } else {
                               Log.e( TAG, "onFailed: " + permission );
                               Toast.makeText( MainActivity.this, permission + "失败了,解释一下",
                                               Toast.LENGTH_SHORT
-                              )
-                                   .show();
+                              ).show();
                         }
                   }
             }
