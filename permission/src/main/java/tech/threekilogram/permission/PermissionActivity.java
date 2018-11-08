@@ -113,19 +113,4 @@ public class PermissionActivity extends AppCompatActivity {
                   overridePendingTransition( 0, 0 );
             }
       }
-
-      public static class Holder {
-
-            private String permission;
-
-            private OnRequestPermissionResultListener onRequestPermissionResult;
-
-            public Holder (
-                String permission,
-                OnRequestPermissionResultListener onRequestPermissionResult ) {
-
-                  this.permission = permission;
-                  this.onRequestPermissionResult = onRequestPermissionResult;
-            }
-      }
 }

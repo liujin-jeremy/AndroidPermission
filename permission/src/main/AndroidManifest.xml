@@ -4,6 +4,7 @@
 
       <application>
             <activity
+                android:launchMode="singleTop"
                 android:name="tech.threekilogram.permission.PermissionActivity"
                 android:theme="@style/TransparentActivityTheme">
             </activity>
