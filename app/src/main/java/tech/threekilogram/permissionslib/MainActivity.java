@@ -2,13 +2,10 @@ package tech.threekilogram.permissionslib;
 
 import android.Manifest.permission;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-import java.util.Arrays;
 import tech.threekilogram.permission.OnRequestPermissionResultListener;
 import tech.threekilogram.permission.PermissionActivity;
 import tech.threekilogram.permission.PermissionFragment;
@@ -30,17 +27,12 @@ public class MainActivity extends AppCompatActivity {
             mPermissionResult = new PermissionResult();
       }
 
-      public void toActivity ( View view ) {
-
-            PermissionActivity.start( this );
-      }
-
       public void toTranslucentActivity ( View view ) {
 
             PermissionFragment.request(
                 this,
-                permission.WRITE_EXTERNAL_STORAGE,
-                mPermissionResult
+                mPermissionResult,
+                permission.READ_EXTERNAL_STORAGE
             );
       }
 
@@ -48,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
             PermissionFragment.request(
                 this,
-                permission.READ_CONTACTS,
-                mPermissionResult
+                mPermissionResult,
+                permission.READ_CONTACTS
             );
       }
 
@@ -57,68 +49,59 @@ public class MainActivity extends AppCompatActivity {
 
             PermissionFragment.request(
                 this,
-                permission.SEND_SMS,
-                mPermissionResult
+                mPermissionResult,
+                permission.SEND_SMS
             );
       }
 
       public void toCalender ( View view ) {
 
-            PermissionActivity.requestPermission(
-                this, permission.SEND_SMS,
-                new OnRequestPermissionResultListener() {
-
-                      @Override
-                      public void onResult (
-                          String permission, boolean success,
-                          boolean isFinalResult ) {
-
-                            Log.e(
-                                TAG,
-                                "onResult : " + permission
-                                    + " " + success + " " + isFinalResult
-                            );
-                      }
-                }
+            PermissionActivity.request(
+                this,
+                mPermissionResult,
+                permission.READ_CALENDAR
             );
       }
 
       public void toCameraRecode ( View view ) {
 
-            ActivityCompat.requestPermissions(
-                this, new String[]{ permission.CAMERA, permission.RECORD_AUDIO }, 1002 );
+            PermissionActivity.request(
+                this,
+                mPermissionResult,
+                permission.CAMERA, permission.RECORD_AUDIO
+            );
       }
 
-      @Override
-      public void onRequestPermissionsResult (
-          int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults ) {
+      public void toLocation ( View view ) {
 
-            super.onRequestPermissionsResult( requestCode, permissions, grantResults );
+            PermissionActivity
+                .request( this, mPermissionResult, permission.ACCESS_FINE_LOCATION );
+      }
 
-            Log.e(
-                TAG, "onRequestPermissionsResult : " + requestCode + " " + Arrays
-                    .toString( permissions ) + " " + Arrays.toString( grantResults ) );
+      public void toActivity ( View view ) {
+
+            PermissionActivity.start( this );
       }
 
       private class PermissionResult implements OnRequestPermissionResultListener {
 
             @Override
-            public void onResult ( String permission, boolean success, boolean isFinalResult ) {
+            public void onResult ( String permission, boolean success, boolean isShowDialog ) {
 
                   if( success ) {
-                        Log.e( TAG, "onResult: " + permission );
+                        Log.e( TAG, "onSuccess: " + permission );
                         Toast.makeText( MainActivity.this, permission + "成功", Toast.LENGTH_SHORT )
                              .show();
                   } else {
 
-                        if( isFinalResult ) {
-                              Log.e( TAG, "onFinalDenied: " + permission );
-                              Toast.makeText( MainActivity.this, permission + "最终结果失败",
+                        if( isShowDialog ) {
+                              Log.e( TAG, "onFailed: " + permission );
+                              Toast.makeText( MainActivity.this, permission + "显示对话框",
                                               Toast.LENGTH_SHORT
                               ).show();
                         } else {
                               Log.e( TAG, "onFailed: " + permission );
-                              Toast.makeText( MainActivity.this, permission + "失败了,解释一下",
+                              Toast.makeText( MainActivity.this, permission + "失败了,并且没有显示对话框",
                                               Toast.LENGTH_SHORT
                               ).show();
                         }

@@ -12,7 +12,7 @@ public interface OnRequestPermissionResultListener {
        *
        * @param permission request permission
        * @param success 是否成功
-       * @param isFinalResult 是否是最终结果 :false申请失败,但是还有弹窗 true永久拒绝了,申请不会弹出窗口了
+       * @param isShowDialog 是否显示了请求对话框, true:显示了
        */
-      void onResult ( String permission, boolean success, boolean isFinalResult );
+      void onResult ( String permission, boolean success, boolean isShowDialog );
 }

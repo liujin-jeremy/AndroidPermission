@@ -42,8 +42,20 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:onClick="toCameraRecode"
-          android:text="使用位置/短信"
+          android:text="使用相机/录音"
           />
+      <Button
+          android:id="@+id/button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:onClick="toLocation"
+          android:text="获取位置"/>
+
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:onClick="toActivity"
+          android:text="透明Activity"/>
 
 
 </LinearLayout>

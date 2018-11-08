@@ -4,7 +4,9 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,8 @@ import android.widget.FrameLayout;
  */
 public class PermissionFragment extends DialogFragment {
 
+      private static final String TAG = PermissionFragment.class.getSimpleName();
+
       /**
        * request permission code
        */
@@ -27,7 +31,7 @@ public class PermissionFragment extends DialogFragment {
        * listener for result
        */
       private OnRequestPermissionResultListener mOnRequestPermissionResult;
-      private String                            mPermission;
+      private String[]                          mPermissions;
 
       /**
        * request a permission
@@ -38,11 +42,11 @@ public class PermissionFragment extends DialogFragment {
        */
       public static void request (
           AppCompatActivity activity,
-          String permission,
-          OnRequestPermissionResultListener onRequestPermissionResult ) {
+          OnRequestPermissionResultListener onRequestPermissionResult,
+          String permission ) {
 
             PermissionFragment fragment = new PermissionFragment();
-            fragment.mPermission = permission;
+            fragment.mPermissions = new String[]{ permission };
             fragment.mOnRequestPermissionResult = onRequestPermissionResult;
 
             fragment.show( activity.getSupportFragmentManager(), fragment.toString() );
@@ -60,29 +64,38 @@ public class PermissionFragment extends DialogFragment {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 ) );
+
             return frameLayout;
+      }
+
+      @Override
+      public void onActivityCreated ( Bundle savedInstanceState ) {
+
+            super.onActivityCreated( savedInstanceState );
+
+            FragmentActivity activity = getActivity();
+            for( String permission : mPermissions ) {
+                  if( !CheckPermission.check( activity, permission ) ) {
+                        return;
+                  }
+            }
+            for( String permission : mPermissions ) {
+                  mOnRequestPermissionResult.onResult( permission, true, false );
+            }
+            dismiss();
       }
 
       @Override
       public void onViewCreated ( @NonNull View view, @Nullable Bundle savedInstanceState ) {
 
             super.onViewCreated( view, savedInstanceState );
-
             /* check permission */
+            handlePermissions();
+      }
 
-            if( PermissionFun.checkPermission( getContext(), mPermission ) ) {
+      private void handlePermissions ( ) {
 
-                  if( mOnRequestPermissionResult != null ) {
-
-                        mOnRequestPermissionResult.onResult( mPermission, true, false );
-                  }
-
-                  dismiss();
-            } else {
-
-                  requestPermissions(
-                      new String[]{ mPermission }, REQUEST_CODE );
-            }
+            requestPermissions( mPermissions, REQUEST_CODE );
       }
 
       @Override
@@ -91,29 +104,31 @@ public class PermissionFragment extends DialogFragment {
 
             super.onRequestPermissionsResult( requestCode, permissions, grantResults );
 
-            if( requestCode == REQUEST_CODE ) {
+            OnRequestPermissionResultListener onRequestPermissionResult = mOnRequestPermissionResult;
 
-                  String permission = permissions[ 0 ];
-                  int grantResult = grantResults[ 0 ];
+            for( int i = 0; i < permissions.length; i++ ) {
+                  String permission = permissions[ i ];
 
-                  if( mOnRequestPermissionResult != null ) {
+                  boolean success = grantResults[ i ] == PackageManager.PERMISSION_GRANTED;
+                  if( success ) {
 
-                        if( grantResult == PackageManager.PERMISSION_GRANTED ) {
+                        onRequestPermissionResult.onResult( permission, true, true );
+                  } else {
 
-                              mOnRequestPermissionResult.onResult( permission, true, false );
-                        } else {
-
-                              if( shouldShowRequestPermissionRationale( permission ) ) {
-
-                                    mOnRequestPermissionResult.onResult( permission, false, false );
+                        FragmentActivity activity = getActivity();
+                        if( activity != null ) {
+                              boolean showed = ActivityCompat.shouldShowRequestPermissionRationale(
+                                  activity,
+                                  permission
+                              );
+                              if( showed ) {
+                                    onRequestPermissionResult.onResult( permission, false, true );
                               } else {
-
-                                    mOnRequestPermissionResult.onResult( permission, false, true );
+                                    onRequestPermissionResult.onResult( permission, false, false );
                               }
                         }
                   }
-
-                  dismiss();
             }
+            dismiss();
       }
 }

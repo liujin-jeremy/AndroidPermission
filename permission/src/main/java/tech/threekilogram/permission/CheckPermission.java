@@ -7,14 +7,14 @@ import android.support.v4.content.ContextCompat;
 /**
  * @author Liujin 2018-10-24:23:30
  */
-public class PermissionFun {
+public class CheckPermission {
 
       /**
        * check permission
        *
        * @return true have permission
        */
-      public static boolean checkPermission ( Context context, String permissions ) {
+      public static boolean check ( Context context, String permissions ) {
 
             return ContextCompat.checkSelfPermission( context, permissions )
                 == PackageManager.PERMISSION_GRANTED;

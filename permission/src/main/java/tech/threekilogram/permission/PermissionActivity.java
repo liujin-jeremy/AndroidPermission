@@ -7,21 +7,24 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author liujin
  */
 public class PermissionActivity extends AppCompatActivity {
 
-      private static final String TAG = PermissionActivity.class.getSimpleName();
+      private static final SparseArray<OnRequestPermissionResultListener> sRequest = new SparseArray<>();
 
-      private static ArrayMap<String, OnRequestPermissionResultListener> sRequest = new ArrayMap<>();
-      private static ArrayMap<String, OnRequestPermissionResultListener> sResult  = new ArrayMap<>();
+      private static AtomicInteger sIndex = new AtomicInteger( 24 );
+
+      private static final String KEY_PERMISSION_GROUP = "KEY_PERMISSION_GROUP";
+      private static final String KEY_LISTENER_INDEX   = "KEY_LISTENER_INDEX";
 
       public static void start ( Context context ) {
 
@@ -29,15 +32,32 @@ public class PermissionActivity extends AppCompatActivity {
             context.startActivity( starter );
       }
 
-      public static void requestPermission (
+      public static void request (
           Context context,
-          String permission,
-          OnRequestPermissionResultListener onRequestPermissionResult ) {
+          OnRequestPermissionResultListener onRequestPermissionResult,
+          String permission ) {
 
-            sRequest.put( permission, onRequestPermissionResult );
+            String[] group = { permission };
+            int index = sIndex.getAndAdd( 1 );
+            sRequest.put( index, onRequestPermissionResult );
 
             Intent starter = new Intent( context, PermissionActivity.class );
-            starter.addFlags( Intent.FLAG_ACTIVITY_SINGLE_TOP );
+            starter.putExtra( KEY_PERMISSION_GROUP, group );
+            starter.putExtra( KEY_LISTENER_INDEX, index );
+            context.startActivity( starter );
+      }
+
+      public static void request (
+          Context context,
+          OnRequestPermissionResultListener onRequestPermissionResult,
+          String... permissions ) {
+
+            int index = sIndex.getAndAdd( 1 );
+            sRequest.put( index, onRequestPermissionResult );
+
+            Intent starter = new Intent( context, PermissionActivity.class );
+            starter.putExtra( KEY_PERMISSION_GROUP, permissions );
+            starter.putExtra( KEY_LISTENER_INDEX, index );
             context.startActivity( starter );
       }
 
@@ -58,31 +78,35 @@ public class PermissionActivity extends AppCompatActivity {
             view.setLayoutParams( new LayoutParams( 0, 0 ) );
             setContentView( view );
 
-            handlePermissions();
+            String[] stringArrayExtra = getIntent().getStringArrayExtra( KEY_PERMISSION_GROUP );
+            if( stringArrayExtra != null ) {
+                  handlePermissions( stringArrayExtra );
+            }
       }
 
-      @Override
-      protected void onNewIntent ( Intent intent ) {
+      private void handlePermissions ( String[] permissions ) {
 
-            super.onNewIntent( intent );
-
-            handlePermissions();
-      }
-
-      private void handlePermissions ( ) {
-
-            while( sRequest.size() > 0 ) {
-                  String permission = sRequest.keyAt( 0 );
-                  OnRequestPermissionResultListener listener = sRequest.remove( permission );
-
-                  if( PermissionFun.checkPermission( this, permission ) ) {
-
-                        listener.onResult( permission, true, false );
-                  } else {
-                        sResult.put( permission, listener );
-                        ActivityCompat
-                            .requestPermissions( this, new String[]{ permission }, 12 );
+            boolean toRequest = false;
+            for( int i = 0; i < permissions.length; i++ ) {
+                  if( !CheckPermission.check( this, permissions[ i ] ) ) {
+                        toRequest = true;
+                        break;
                   }
+            }
+
+            int index = getIntent().getIntExtra( KEY_LISTENER_INDEX, -1 );
+
+            if( toRequest ) {
+                  ActivityCompat.requestPermissions( this, permissions, index );
+            } else {
+
+                  OnRequestPermissionResultListener listener = sRequest.get( index );
+                  sRequest.delete( index );
+                  for( String permission : permissions ) {
+                        listener.onResult( permission, true, false );
+                  }
+                  finish();
+                  overridePendingTransition( 0, 0 );
             }
       }
 
@@ -92,25 +116,27 @@ public class PermissionActivity extends AppCompatActivity {
 
             super.onRequestPermissionsResult( requestCode, permissions, grantResults );
 
-            String permission = permissions[ 0 ];
-            OnRequestPermissionResultListener listener = sResult.remove( permission );
+            OnRequestPermissionResultListener listener = sRequest.get( requestCode );
+            sRequest.delete( requestCode );
 
-            boolean success = grantResults[ 0 ] == PackageManager.PERMISSION_GRANTED;
-            if( success ) {
+            for( int i = 0; i < permissions.length; i++ ) {
+                  String permission = permissions[ i ];
 
-                  listener.onResult( permission, success, false );
-            } else {
+                  boolean success = grantResults[ i ] == PackageManager.PERMISSION_GRANTED;
+                  if( success ) {
 
-                  if( ActivityCompat.shouldShowRequestPermissionRationale( this, permission ) ) {
-                        listener.onResult( permission, false, false );
+                        listener.onResult( permission, true, true );
                   } else {
-                        listener.onResult( permission, false, true );
+
+                        if( ActivityCompat
+                            .shouldShowRequestPermissionRationale( this, permission ) ) {
+                              listener.onResult( permission, false, true );
+                        } else {
+                              listener.onResult( permission, false, false );
+                        }
                   }
             }
-
-            if( sResult.size() == 0 ) {
-                  finish();
-                  overridePendingTransition( 0, 0 );
-            }
+            finish();
+            overridePendingTransition( 0, 0 );
       }
 }
