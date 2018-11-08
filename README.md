@@ -1,7 +1,7 @@
 ## 权限申请库
 
 ```
-implementation 'tech.threekilogram:permission:2.0.1'
+implementation 'tech.threekilogram:permission:2.0.2'
 ```
 
 ## 使用
