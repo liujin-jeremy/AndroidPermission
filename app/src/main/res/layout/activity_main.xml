@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
@@ -8,47 +9,55 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-
       <Button
+          android:id="@+id/sd"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:onClick="toTranslucentActivity"
-          android:text="读取sd卡"
-          />
-
+          android:layout_marginTop="8dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginLeft="8dp"
+          android:text="读取SD卡"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"/>
       <Button
+          android:id="@+id/contact"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:onClick="toManager"
+          android:layout_marginTop="8dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginLeft="8dp"
           android:text="读取联系人"
-          />
-
-
+          app:layout_constraintStart_toEndOf="@+id/sd"
+          app:layout_constraintTop_toTopOf="parent"/>
       <Button
+          android:id="@+id/sms"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:onClick="toMsm"
+          android:layout_marginTop="8dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginLeft="8dp"
           android:text="发送短信"
-          />
-
+          app:layout_constraintStart_toEndOf="@+id/contact"
+          app:layout_constraintTop_toTopOf="parent"/>
       <Button
+          android:id="@+id/cameraRecord"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:onClick="toCalender"
-          android:text="读取日历"
-          />
-
+          android:layout_marginTop="8dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginLeft="8dp"
+          android:text="使用相机和录音"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/sd"/>
       <Button
+          android:id="@+id/appSetting"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:onClick="toCameraRecode"
-          android:text="使用相机/录音"
-          />
-      <Button
-          android:id="@+id/button"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:onClick="toLocation"
-          android:text="获取位置"/>
+          android:layout_marginTop="8dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginLeft="8dp"
+          android:text="应用设置"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/cameraRecord"/>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

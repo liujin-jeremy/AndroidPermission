@@ -50,14 +50,7 @@ public class PermissionActivity extends AppCompatActivity {
           OnRequestPermissionResultListener onRequestPermissionResult,
           String permission ) {
 
-            String[] group = { permission };
-            int index = sIndex.getAndAdd( 1 );
-            sRequest.put( index, onRequestPermissionResult );
-
-            Intent starter = new Intent( context, PermissionActivity.class );
-            starter.putExtra( KEY_PERMISSION_GROUP, group );
-            starter.putExtra( KEY_LISTENER_INDEX, index );
-            context.startActivity( starter );
+            request( context, onRequestPermissionResult, new String[]{ permission } );
       }
 
       /**

@@ -4,7 +4,7 @@
 
       <application>
             <activity
-                android:name="tech.threekilogram.permission.PermissionActivity"
+                android:name="tech.jeremy.permission.PermissionActivity"
                 android:theme="@style/TransparentActivityTheme">
             </activity>
       </application>

@@ -1,5 +1,6 @@
 package tech.jeremy.permission;
 
+import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,11 +9,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
+import tech.threekilogram.permission.R;
 
 /**
  * for request permission by fragment
@@ -44,28 +47,50 @@ public class PermissionFragment extends DialogFragment {
           OnRequestPermissionResultListener onRequestPermissionResult,
           String permission ) {
 
+            request( activity, onRequestPermissionResult, new String[]{ permission } );
+      }
+
+      /**
+       * request a permissions
+       *
+       * @param activity support context and fragment manager
+       * @param permissions permissions to request
+       * @param onRequestPermissionResult listener for result
+       */
+      public static void request (
+          AppCompatActivity activity,
+          OnRequestPermissionResultListener onRequestPermissionResult,
+          String... permissions ) {
+
             PermissionFragment fragment = new PermissionFragment();
-            fragment.mPermissions = new String[]{ permission };
+            fragment.mPermissions = permissions;
             fragment.mOnRequestPermissionResult = onRequestPermissionResult;
 
             fragment.show( activity.getSupportFragmentManager(), fragment.toString() );
       }
 
-      @Nullable
-      @Override
-      public View onCreateView (
-          @NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-          @Nullable Bundle savedInstanceState ) {
+      @NonNull
+      private FrameLayout getFrameLayout ( ) {
 
             FrameLayout frameLayout = new FrameLayout( getContext() );
             frameLayout.setLayoutParams(
                 new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
+                    LayoutParams.WRAP_CONTENT,
+                    LayoutParams.WRAP_CONTENT
                 )
             );
             frameLayout.setBackgroundColor( Color.TRANSPARENT );
             return frameLayout;
+      }
+
+      @NonNull
+      @Override
+      public Dialog onCreateDialog ( @Nullable Bundle savedInstanceState ) {
+
+            AlertDialog.Builder builder = new Builder( getContext(), R.style.TransparentDialog );
+            builder.setView( getFrameLayout() );
+            handlePermissions();
+            return builder.create();
       }
 
       @Override
@@ -83,14 +108,6 @@ public class PermissionFragment extends DialogFragment {
                   mOnRequestPermissionResult.onResult( permission, true, false );
             }
             dismiss();
-      }
-
-      @Override
-      public void onViewCreated ( @NonNull View view, @Nullable Bundle savedInstanceState ) {
-
-            super.onViewCreated( view, savedInstanceState );
-            /* check permission */
-            handlePermissions();
       }
 
       private void handlePermissions ( ) {
