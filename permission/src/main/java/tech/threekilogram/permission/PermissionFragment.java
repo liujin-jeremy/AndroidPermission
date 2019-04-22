@@ -1,6 +1,7 @@
 package tech.threekilogram.permission;
 
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,8 +20,6 @@ import android.widget.FrameLayout;
  * @author liujin
  */
 public class PermissionFragment extends DialogFragment {
-
-      private static final String TAG = PermissionFragment.class.getSimpleName();
 
       /**
        * request permission code
@@ -63,8 +62,9 @@ public class PermissionFragment extends DialogFragment {
                 new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
-                ) );
-
+                )
+            );
+            frameLayout.setBackgroundColor( Color.TRANSPARENT );
             return frameLayout;
       }
 

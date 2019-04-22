@@ -51,11 +51,4 @@
           android:onClick="toLocation"
           android:text="获取位置"/>
 
-      <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:onClick="toActivity"
-          android:text="透明Activity"/>
-
-
 </LinearLayout>

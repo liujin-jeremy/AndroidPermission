@@ -8,7 +8,7 @@ package tech.threekilogram.permission;
 public interface OnRequestPermissionResultListener {
 
       /**
-       * 申请成功
+       * 申请权限结果的回调
        *
        * @param permission request permission
        * @param success 是否成功

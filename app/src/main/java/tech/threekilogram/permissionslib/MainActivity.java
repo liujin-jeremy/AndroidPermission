@@ -78,11 +78,6 @@ public class MainActivity extends AppCompatActivity {
                 .request( this, mPermissionResult, permission.ACCESS_FINE_LOCATION );
       }
 
-      public void toActivity ( View view ) {
-
-            PermissionActivity.start( this );
-      }
-
       private class PermissionResult implements OnRequestPermissionResultListener {
 
             @Override
