@@ -6,7 +6,7 @@ implementation 'tech.liujin:permission:1.0.0'
 
 ## 使用
 
-* 请求
+请求
 
 ```
 PermissionFragment.request(
@@ -23,6 +23,8 @@ PermissionFragment.request(
     }
 );
 ```
+
+或者
 
 ```
 PermissionActivity.requestPermission(
@@ -41,3 +43,4 @@ PermissionActivity.requestPermission(
 ```
 
 ![](img/pic00.gif)
+

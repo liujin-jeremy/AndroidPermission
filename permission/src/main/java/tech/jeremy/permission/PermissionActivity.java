@@ -1,4 +1,4 @@
-package tech.threekilogram.permission;
+package tech.jeremy.permission;
 
 import android.content.Context;
 import android.content.Intent;

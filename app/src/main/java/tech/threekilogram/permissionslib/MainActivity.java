@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-import tech.threekilogram.permission.OnRequestPermissionResultListener;
-import tech.threekilogram.permission.PermissionActivity;
-import tech.threekilogram.permission.PermissionFragment;
+import tech.jeremy.permission.OnRequestPermissionResultListener;
+import tech.jeremy.permission.PermissionActivity;
+import tech.jeremy.permission.PermissionFragment;
 
 /**
  * @author liujin
@@ -16,7 +16,8 @@ import tech.threekilogram.permission.PermissionFragment;
 public class MainActivity extends AppCompatActivity {
 
       private static final String TAG = "MainActivity";
-      private              PermissionResult mPermissionResult;
+
+      private PermissionResult mPermissionResult;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {

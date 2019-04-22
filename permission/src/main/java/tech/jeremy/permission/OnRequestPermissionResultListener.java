@@ -1,4 +1,4 @@
-package tech.threekilogram.permission;
+package tech.jeremy.permission;
 
 /**
  * listener for request permission
