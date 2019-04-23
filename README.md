@@ -9,36 +9,14 @@ implementation 'tech.liujin:permission:1.0.0'
 请求
 
 ```
-PermissionFragment.request(
+PermissionManager.request(
     this,
-    permission.WRITE_EXTERNAL_STORAGE,
     new OnRequestPermissionResultListener() {
           @Override
-          public void onResult (
-              String permission, 
-              boolean success,
-              boolean isFinalResult ) {
-               
+          public void onResult ( String permission, boolean success, boolean isShowDialog ) {
           }
-    }
-);
-```
-
-或者
-
-```
-PermissionActivity.requestPermission(
-    this, 
-    permission.SEND_SMS,
-    new OnRequestPermissionResultListener() {
-          @Override
-          public void onResult (
-              String permission, 
-              boolean success,
-              boolean isFinalResult ) {
-               
-          }
-    }
+    },
+    permission.ACCESS_FINE_LOCATION
 );
 ```
 

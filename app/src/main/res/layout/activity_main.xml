@@ -59,5 +59,66 @@
           android:text="应用设置"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/cameraRecord"/>
+      <Button
+          android:id="@+id/setting"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginLeft="8dp"
+          android:text="设置"
+          app:layout_constraintStart_toEndOf="@+id/appSetting"
+          app:layout_constraintTop_toBottomOf="@+id/cameraRecord"/>
+      <Button
+          android:id="@+id/detailSetting"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginLeft="8dp"
+          android:text="应用详细设置"
+          app:layout_constraintStart_toEndOf="@+id/setting"
+          app:layout_constraintTop_toBottomOf="@+id/cameraRecord"/>
+      <Button
+          android:id="@+id/GPSSetting"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginLeft="8dp"
+          android:text="GPS设置"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/appSetting"/>
+      <Button
+          android:id="@+id/wireLessSetting"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginLeft="8dp"
+          android:text="网络设置"
+          app:layout_constraintStart_toEndOf="@+id/GPSSetting"
+          app:layout_constraintTop_toBottomOf="@+id/setting"/>
+      <Button
+          android:id="@+id/wifiSetting"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginLeft="8dp"
+          android:text="wifi setting"
+          app:layout_constraintStart_toEndOf="@+id/wireLessSetting"
+          app:layout_constraintTop_toBottomOf="@+id/detailSetting"/>
+      <Button
+          android:id="@+id/data"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginLeft="8dp"
+          android:text="漫游数据"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/GPSSetting"/>
+
 
 </android.support.constraint.ConstraintLayout>

@@ -27,6 +27,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
       private Button           mCameraRecord;
       private ConstraintLayout mRoot;
       private Button           mAppSetting;
+      private Button           mSetting;
+      private Button           mDetailSetting;
+      private Button           mGPSSetting;
+      private Button           mWireLessSetting;
+      private Button           mWifiSetting;
+      private Button           mData;
+      private Button           mBlueTooth;
 
       @Override
       protected void onCreate ( Bundle savedInstanceState ) {
@@ -51,6 +58,20 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             mRoot = (ConstraintLayout) findViewById( R.id.root );
             mAppSetting = (Button) findViewById( R.id.appSetting );
             mAppSetting.setOnClickListener( this );
+            mSetting = (Button) findViewById( R.id.setting );
+            mSetting.setOnClickListener( this );
+            mDetailSetting = (Button) findViewById( R.id.detailSetting );
+            mDetailSetting.setOnClickListener( this );
+            mGPSSetting = (Button) findViewById( R.id.GPSSetting );
+            mGPSSetting.setOnClickListener( this );
+            mWireLessSetting = (Button) findViewById( R.id.wireLessSetting );
+            mWireLessSetting.setOnClickListener( this );
+            mWifiSetting = (Button) findViewById( R.id.wifiSetting );
+            mWifiSetting.setOnClickListener( this );
+            mData = (Button) findViewById( R.id.data );
+            mData.setOnClickListener( this );
+            mBlueTooth = (Button) findViewById( R.id.blueTooth );
+            mBlueTooth.setOnClickListener( this );
       }
 
       @Override
@@ -87,6 +108,24 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                         break;
                   case R.id.appSetting:
                         startActivity( IntentBuilder.appSettingsIntent() );
+                        break;
+                  case R.id.setting:
+                        startActivity( IntentBuilder.settingIntent() );
+                        break;
+                  case R.id.detailSetting:
+                        startActivity( IntentBuilder.appDetailSetting( this ) );
+                        break;
+                  case R.id.GPSSetting:
+                        startActivity( IntentBuilder.GPSSetting() );
+                        break;
+                  case R.id.wireLessSetting:
+                        startActivity( IntentBuilder.wirelessSetting() );
+                        break;
+                  case R.id.wifiSetting:
+                        startActivity( IntentBuilder.wifiSetting() );
+                        break;
+                  case R.id.data:
+                        startActivity( IntentBuilder.dataRoaming() );
                         break;
                   default:
                         break;
