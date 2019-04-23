@@ -70,8 +70,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             mWifiSetting.setOnClickListener( this );
             mData = (Button) findViewById( R.id.data );
             mData.setOnClickListener( this );
-            mBlueTooth = (Button) findViewById( R.id.blueTooth );
-            mBlueTooth.setOnClickListener( this );
       }
 
       @Override
