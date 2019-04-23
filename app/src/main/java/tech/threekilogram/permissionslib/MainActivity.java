@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
-import tech.jeremy.permission.IntentBuilder;
-import tech.jeremy.permission.OnRequestPermissionResultListener;
-import tech.jeremy.permission.PermissionManager;
+import tech.liujin.permission.IntentBuilder;
+import tech.liujin.permission.OnRequestPermissionResultListener;
+import tech.liujin.permission.PermissionManager;
 
 /**
  * @author liujin
