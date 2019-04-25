@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="tech.threekilogram.permissionslib">
+    package="tech.liujin.permissionslib">
 
 
       <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -21,7 +21,7 @@
           android:theme="@style/AppTheme"
           tools:ignore="GoogleAppIndexingWarning">
 
-            <activity android:name="tech.threekilogram.permissionslib.MainActivity">
+            <activity android:name="tech.liujin.permissionslib.MainActivity">
                   <intent-filter>
                         <action android:name="android.intent.action.MAIN"/>
 

@@ -1,4 +1,4 @@
-package tech.threekilogram.permissionslib;
+package tech.liujin.permissionslib;
 
 import static org.junit.Assert.assertEquals;
 

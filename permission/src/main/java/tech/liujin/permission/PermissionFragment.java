@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
-import tech.threekilogram.permission.R;
 
 /**
  * for request permission by fragment

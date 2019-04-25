@@ -1,4 +1,4 @@
-package tech.threekilogram.permissionslib;
+package tech.liujin.permissionslib;
 
 import android.Manifest.permission;
 import android.os.Bundle;
