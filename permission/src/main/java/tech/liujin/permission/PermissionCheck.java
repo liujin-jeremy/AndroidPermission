@@ -9,7 +9,7 @@ import android.support.v4.content.ContextCompat;
  * @author Liujin 2018-10-24:23:30
  */
 @SuppressWarnings("WeakerAccess")
-public class Check {
+public class PermissionCheck {
 
       /**
        * checkPermission permission

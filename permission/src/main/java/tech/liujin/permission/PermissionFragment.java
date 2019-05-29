@@ -99,7 +99,7 @@ public class PermissionFragment extends DialogFragment {
 
             FragmentActivity activity = getActivity();
             for( String permission : mPermissions ) {
-                  if( !Check.checkPermission( activity, permission ) ) {
+                  if( !PermissionCheck.checkPermission( activity, permission ) ) {
                         return;
                   }
             }

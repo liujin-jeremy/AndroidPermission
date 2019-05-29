@@ -110,7 +110,7 @@ public class PermissionActivity extends AppCompatActivity {
             /* 标记需要请求的权限是否已经拥有 */
             boolean toRequest = false;
             for( int i = 0; i < permissions.length; i++ ) {
-                  if( !Check.checkPermission( this, permissions[ i ] ) ) {
+                  if( !PermissionCheck.checkPermission( this, permissions[ i ] ) ) {
                         toRequest = true;
                         break;
                   }
