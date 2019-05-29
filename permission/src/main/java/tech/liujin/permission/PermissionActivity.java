@@ -23,11 +23,15 @@ public class PermissionActivity extends AppCompatActivity {
        * 为不同的权限申请保存回调
        */
       private static final SparseArray<OnRequestPermissionResultListener> sRequest = new SparseArray<>();
-
       /**
        * 全局索引
        */
-      private static AtomicInteger sIndex = new AtomicInteger( 24 );
+      private static       AtomicInteger                                  sIndex   = new AtomicInteger( 24 );
+
+      /**
+       * 请求码
+       */
+      private static final int REQUEST_CODE = 1026;
 
       /**
        * 标记请求的是一组权限
@@ -37,6 +41,11 @@ public class PermissionActivity extends AppCompatActivity {
        * 标记索引
        */
       private static final String KEY_LISTENER_INDEX   = "KEY_LISTENER_INDEX";
+
+      /**
+       * 监听回调
+       */
+      private OnRequestPermissionResultListener mListener;
 
       /**
        * 请求一个权限
@@ -95,6 +104,10 @@ public class PermissionActivity extends AppCompatActivity {
 
             // 获取需要请求的权限
             String[] stringArrayExtra = getIntent().getStringArrayExtra( KEY_PERMISSION_GROUP );
+            int index = getIntent().getIntExtra( KEY_LISTENER_INDEX, -1 );
+            mListener = sRequest.get( index );
+            sRequest.delete( index );
+
             if( stringArrayExtra != null ) {
                   handlePermissions( stringArrayExtra );
             }
@@ -109,26 +122,24 @@ public class PermissionActivity extends AppCompatActivity {
 
             /* 标记需要请求的权限是否已经拥有 */
             boolean toRequest = false;
-            for( int i = 0; i < permissions.length; i++ ) {
-                  if( !PermissionCheck.checkPermission( this, permissions[ i ] ) ) {
+            for( String s : permissions ) {
+                  if( !PermissionCheck.checkPermission( this, s ) ) {
                         toRequest = true;
                         break;
                   }
             }
 
             // 获取请求码
-            int index = getIntent().getIntExtra( KEY_LISTENER_INDEX, -1 );
             if( toRequest ) {
                   // 请求权限
-                  ActivityCompat.requestPermissions( this, permissions, index );
+                  ActivityCompat.requestPermissions( this, permissions, REQUEST_CODE );
             } else {
                   // 所有权限已经拥有
-                  OnRequestPermissionResultListener listener = sRequest.get( index );
-                  sRequest.delete( index );
-                  for( String permission : permissions ) {
-                        listener.onResult( permission, true, false );
+                  if( mListener != null ) {
+                        for( String permission : permissions ) {
+                              mListener.onResult( permission, true, false );
+                        }
                   }
-
                   finishActivity();
             }
       }
@@ -139,20 +150,27 @@ public class PermissionActivity extends AppCompatActivity {
 
             super.onRequestPermissionsResult( requestCode, permissions, grantResults );
 
-            OnRequestPermissionResultListener listener = sRequest.get( requestCode );
-            sRequest.delete( requestCode );
+            if( requestCode != REQUEST_CODE ) {
+                  return;
+            }
 
             for( int i = 0; i < permissions.length; i++ ) {
                   String permission = permissions[ i ];
 
                   boolean success = grantResults[ i ] == PackageManager.PERMISSION_GRANTED;
                   if( success ) {
-                        listener.onResult( permission, true, true );
+                        if( mListener != null ) {
+                              mListener.onResult( permission, true, true );
+                        }
                   } else {
                         if( ActivityCompat.shouldShowRequestPermissionRationale( this, permission ) ) {
-                              listener.onResult( permission, false, true );
+                              if( mListener != null ) {
+                                    mListener.onResult( permission, false, true );
+                              }
                         } else {
-                              listener.onResult( permission, false, false );
+                              if( mListener != null ) {
+                                    mListener.onResult( permission, false, false );
+                              }
                         }
                   }
             }

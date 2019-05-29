@@ -31,7 +31,7 @@ public class PermissionFragment extends DialogFragment {
       /**
        * listener for result
        */
-      private OnRequestPermissionResultListener mOnRequestPermissionResult;
+      private OnRequestPermissionResultListener mListener;
       private String[]                          mPermissions;
 
       /**
@@ -63,7 +63,7 @@ public class PermissionFragment extends DialogFragment {
 
             PermissionFragment fragment = new PermissionFragment();
             fragment.mPermissions = permissions;
-            fragment.mOnRequestPermissionResult = onRequestPermissionResult;
+            fragment.mListener = onRequestPermissionResult;
 
             fragment.show( activity.getSupportFragmentManager(), fragment.toString() );
       }
@@ -103,8 +103,10 @@ public class PermissionFragment extends DialogFragment {
                         return;
                   }
             }
-            for( String permission : mPermissions ) {
-                  mOnRequestPermissionResult.onResult( permission, true, false );
+            if( mListener != null ) {
+                  for( String permission : mPermissions ) {
+                        mListener.onResult( permission, true, false );
+                  }
             }
             dismiss();
       }
@@ -120,15 +122,14 @@ public class PermissionFragment extends DialogFragment {
 
             super.onRequestPermissionsResult( requestCode, permissions, grantResults );
 
-            OnRequestPermissionResultListener onRequestPermissionResult = mOnRequestPermissionResult;
-
             for( int i = 0; i < permissions.length; i++ ) {
                   String permission = permissions[ i ];
 
                   boolean success = grantResults[ i ] == PackageManager.PERMISSION_GRANTED;
                   if( success ) {
-
-                        onRequestPermissionResult.onResult( permission, true, true );
+                        if( mListener != null ) {
+                              mListener.onResult( permission, true, true );
+                        }
                   } else {
 
                         FragmentActivity activity = getActivity();
@@ -138,9 +139,13 @@ public class PermissionFragment extends DialogFragment {
                                   permission
                               );
                               if( showed ) {
-                                    onRequestPermissionResult.onResult( permission, false, true );
+                                    if( mListener != null ) {
+                                          mListener.onResult( permission, false, true );
+                                    }
                               } else {
-                                    onRequestPermissionResult.onResult( permission, false, false );
+                                    if( mListener != null ) {
+                                          mListener.onResult( permission, false, false );
+                                    }
                               }
                         }
                   }
