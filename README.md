@@ -1,7 +1,7 @@
 ## 权限申请库
 
 ```
-implementation 'tech.liujin:permission:1.0.3'
+implementation 'tech.liujin:PermissionManager:1.0.7'
 ```
 
 ## 使用
