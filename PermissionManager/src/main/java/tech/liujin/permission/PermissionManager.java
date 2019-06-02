@@ -10,6 +10,14 @@ import android.support.v7.app.AppCompatActivity;
  */
 public class PermissionManager {
 
+      /**
+       * 检查权限
+       *
+       * @param context context
+       * @param permission 需要检查的权限
+       *
+       * @return true:拥有权限
+       */
       public static boolean check ( Context context, String permission ) {
 
             return ContextCompat.checkSelfPermission( context, permission ) == PackageManager.PERMISSION_GRANTED;

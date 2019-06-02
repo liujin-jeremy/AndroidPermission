@@ -25,16 +25,16 @@ public class PermissionActivity extends AppCompatActivity {
        * 为不同的权限申请保存回调
        */
       private static final SparseArray<OnRequestPermissionResultListener> sRequest = new SparseArray<>();
+
       /**
        * 全局索引
        */
-      private static       AtomicInteger                                  sIndex   = new AtomicInteger( 24 );
+      private static AtomicInteger sIndex = new AtomicInteger( 24 );
 
       /**
        * 请求码
        */
-      private static final int REQUEST_CODE = 1026;
-
+      private static final int    REQUEST_CODE         = 1026;
       /**
        * 标记请求的是一组权限
        */
