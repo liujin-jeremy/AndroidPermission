@@ -1,9 +1,7 @@
 package tech.liujin.permission;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.LocationManager;
-import android.support.v4.content.ContextCompat;
 
 /**
  * @author Liujin 2018-10-24:23:30
@@ -11,16 +9,7 @@ import android.support.v4.content.ContextCompat;
 @SuppressWarnings("WeakerAccess")
 public class PermissionCheck {
 
-      /**
-       * checkPermission permission
-       *
-       * @return true have permission
-       */
-      @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-      public static boolean checkPermission ( Context context, String permissions ) {
 
-            return ContextCompat.checkSelfPermission( context, permissions ) == PackageManager.PERMISSION_GRANTED;
-      }
 
       /**
        * 检测GPS是否打开

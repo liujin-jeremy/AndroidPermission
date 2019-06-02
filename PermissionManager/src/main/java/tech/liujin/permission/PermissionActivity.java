@@ -126,7 +126,7 @@ public class PermissionActivity extends AppCompatActivity {
             /* 标记需要请求的权限是否已经拥有 */
             boolean toRequest = false;
             for( String s : permissions ) {
-                  if( !com.finder.finder.permission.PermissionCheck.checkPermission( this, s ) ) {
+                  if( !PermissionManager.check( this, s ) ) {
                         toRequest = true;
                         break;
                   }

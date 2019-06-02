@@ -1,6 +1,8 @@
 package tech.liujin.permission;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 /**
@@ -10,7 +12,7 @@ public class PermissionManager {
 
       public static boolean check ( Context context, String permission ) {
 
-            return PermissionCheck.checkPermission( context, permission );
+            return ContextCompat.checkSelfPermission( context, permission ) == PackageManager.PERMISSION_GRANTED;
       }
 
       /**
