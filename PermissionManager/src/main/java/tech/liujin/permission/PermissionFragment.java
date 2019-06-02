@@ -9,10 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 
@@ -73,7 +71,7 @@ public class PermissionFragment extends DialogFragment {
 
             FrameLayout frameLayout = new FrameLayout( getContext() );
             frameLayout.setLayoutParams(
-                new ViewGroup.LayoutParams(
+                new LayoutParams(
                     LayoutParams.WRAP_CONTENT,
                     LayoutParams.WRAP_CONTENT
                 )
@@ -86,7 +84,7 @@ public class PermissionFragment extends DialogFragment {
       @Override
       public Dialog onCreateDialog ( @Nullable Bundle savedInstanceState ) {
 
-            AlertDialog.Builder builder = new Builder( getContext(), R.style.TransparentDialog );
+            Builder builder = new Builder( getContext(), R.style.TransparentDialog );
             builder.setView( getFrameLayout() );
             handlePermissions();
             return builder.create();

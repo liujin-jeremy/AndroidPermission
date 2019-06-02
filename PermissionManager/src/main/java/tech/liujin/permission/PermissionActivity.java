@@ -1,5 +1,7 @@
 package tech.liujin.permission;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -80,6 +82,7 @@ public class PermissionActivity extends AppCompatActivity {
             Intent starter = new Intent( context, PermissionActivity.class );
             starter.putExtra( KEY_PERMISSION_GROUP, permissions );
             starter.putExtra( KEY_LISTENER_INDEX, index );
+            starter.addFlags( FLAG_ACTIVITY_NEW_TASK );
             context.startActivity( starter );
       }
 
@@ -123,7 +126,7 @@ public class PermissionActivity extends AppCompatActivity {
             /* 标记需要请求的权限是否已经拥有 */
             boolean toRequest = false;
             for( String s : permissions ) {
-                  if( !PermissionCheck.checkPermission( this, s ) ) {
+                  if( !com.finder.finder.permission.PermissionCheck.checkPermission( this, s ) ) {
                         toRequest = true;
                         break;
                   }

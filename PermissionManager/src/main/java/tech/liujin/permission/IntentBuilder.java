@@ -80,7 +80,7 @@ public class IntentBuilder {
        */
       public static Intent dataRoaming ( ) {
 
-            return new Intent( android.provider.Settings.ACTION_DATA_ROAMING_SETTINGS );
+            return new Intent( Settings.ACTION_DATA_ROAMING_SETTINGS );
       }
 
       /**

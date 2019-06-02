@@ -8,6 +8,11 @@ import android.support.v7.app.AppCompatActivity;
  */
 public class PermissionManager {
 
+      public static boolean check ( Context context, String permission ) {
+
+            return PermissionCheck.checkPermission( context, permission );
+      }
+
       /**
        * request a permission
        *

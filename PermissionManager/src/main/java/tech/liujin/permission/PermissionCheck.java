@@ -33,6 +33,6 @@ public class PermissionCheck {
 
             LocationManager locationManager = (LocationManager) context.getApplicationContext()
                                                                        .getSystemService( Context.LOCATION_SERVICE );
-            return locationManager.isProviderEnabled( android.location.LocationManager.GPS_PROVIDER );
+            return locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER );
       }
 }
